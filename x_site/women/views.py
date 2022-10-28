@@ -3,7 +3,10 @@ from django.shortcuts import render, redirect
 
 from .models import *
 
-menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
+menu = [{'title': "О сайте", 'url_name': 'about'},
+        {'title': "Добавить статью", 'url_name': 'add_page'},
+        {'title': "Обратная связь", 'url_name': 'contact'},
+        {'title': "Войти", 'url_name': 'login'}]
 
 def index(request):
     posts = Women.objects.all()
@@ -13,17 +16,14 @@ def about(request):
     return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
-def categories(request, catid):
-    if request.POST:
-        print(request.POST)
+def add_page(req):
+    return HttpResponse('some')
 
-    return HttpResponse(f"<h1>Статьи по категориям</h1><p>{catid}</p>")
+def contact(req):
+    return HttpResponse('some')
 
-def archive(request, year):
-    if int(year) > 2020:
-        return redirect('home', permanent=False)
+def login(req):
+    return HttpResponse('some')
 
-    return HttpResponse(f"<h1>Архив по годам</h1><p>{year}</p>")
-
-def pageNotFound(request, exception):
-    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+def show_post(req, post_id):
+    return HttpResponse(f'{post_id}')
