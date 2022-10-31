@@ -10,7 +10,7 @@ class Women(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
-    category_id = models.ForeignKey('Category', on_delete=models.SET(1), null=True)
+    category = models.ForeignKey('Category', on_delete=models.SET(1), null=True)
 
     def __str__(self):
         return self.title
@@ -20,3 +20,6 @@ class Women(models.Model):
 
 class Category(models.Model):
     category = models.CharField(max_length=255)
+
+    def get_category(self):
+        return reverse('category', kwargs={'cat_id': self.pk})

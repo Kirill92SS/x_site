@@ -10,7 +10,8 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 
 def index(request):
     posts = Women.objects.all()
-    arg = {'posts': posts, 'menu': menu, 'title': 'Главная страница'}
+    cat = Category.objects.all()
+    arg = {'posts': posts, 'menu': menu, 'title': 'Главная страница', 'cat': cat}
     return render(request, 'women/index.html', context=arg)
 
 def about(request):
@@ -29,3 +30,9 @@ def login(req):
 def show_post(req, post_id):
     girl_info = Women.objects.filter(id=post_id)
     return HttpResponse(f'{girl_info[0].content}')
+
+def category(request, cat_id):
+    posts = Women.objects.filter(category_id=cat_id)
+    cat = Category.objects.all()
+    arg = {'posts': posts, 'menu': menu, 'title': 'Главная страница', 'cat': cat}
+    return render(request, 'women/index.html', context=arg)
